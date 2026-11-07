@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f2">
+  <title>Pedidos · NOVA Market</title>
+  <link rel="icon" href="/nova.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell bar-inner">
+      <a href="/" class="brand"><img src="/nova.svg" alt="" width="34" height="34"><span>NOVA <b>Market</b></span></a>
+      <span class="top-context"><span class="live-dot"></span> Laboratorio local <span class="bar-divider"></span> Semana 11</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="hero-index">01</span> OPERACIONES COMERCIALES</p>
+        <h1 id="page-title">Centro de pedidos</h1>
+        <p>Registra un pedido, revisa el descuento aplicado y confirma la venta para avisar a las áreas involucradas.</p>
+      </div>
+      <svg class="hero-art" viewBox="0 0 350 220" aria-hidden="true">
+        <circle cx="242" cy="109" r="96" fill="none" stroke="#ffffff" stroke-opacity=".16"/>
+        <circle cx="242" cy="109" r="72" fill="none" stroke="#ffffff" stroke-opacity=".16"/>
+        <path d="M120 110h232M242-5v230" stroke="#ffffff" stroke-opacity=".13" stroke-dasharray="4 8"/>
+        <rect x="195" y="51" width="93" height="113" rx="15" transform="rotate(11 241 107)" fill="#242d38" stroke="#90a98f"/>
+        <rect x="178" y="45" width="93" height="113" rx="15" transform="rotate(-10 224 101)" fill="#d5ef9a"/>
+        <g transform="rotate(-10 224 101)" fill="none" stroke="#192b22" stroke-width="2.4" stroke-linecap="round">
+          <path d="M199 75h28M199 88h50M199 101h50M199 114h28"/>
+          <circle cx="241" cy="131" r="11"/>
+          <path d="m237 131 3 3 6-7"/>
+        </g>
+        <circle cx="315" cy="58" r="4" fill="#d5ef9a"/>
+        <circle cx="147" cy="138" r="3" fill="#d5ef9a"/>
+        <path d="M306 145v18m-9-9h18M153 58v14m-7-7h14" stroke="#d5ef9a" stroke-width="1.5"/>
+      </svg>
+    </section>
+
+    <section class="metrics" aria-label="Resumen de pedidos">
+      <div class="metric"><span class="metric-label"><span class="dot ink"></span> Pedidos totales</span><strong id="count-all">—</strong></div>
+      <div class="metric"><span class="metric-label"><span class="dot amber"></span> Por confirmar</span><strong id="count-pending">—</strong></div>
+      <div class="metric"><span class="metric-label"><span class="dot green"></span> Confirmados</span><strong id="count-confirmed">—</strong></div>
+    </section>
+
+    <p id="feedback" class="feedback" role="status" hidden></p>
+    <div class="workspace">
+      <section class="card" aria-labelledby="new-title">
+        <div class="card-head">
+          <p class="section-label">REGISTRO</p>
+          <h2 id="new-title">Nuevo pedido</h2>
+          <p>Selecciona el perfil del cliente para aplicar su política comercial.</p>
+        </div>
+        <form id="order-form">
+          <label for="customer">Nombre o referencia del cliente</label>
+          <input id="customer" name="customer" placeholder="Ej. Ana Torres" maxlength="100" autocomplete="off" required>
+          <label for="category">Categoría del cliente</label>
+          <select id="category" name="category" required><option value="">Cargando categorías…</option></select>
+          <label for="amount">Importe del pedido</label>
+          <div class="money-input"><span aria-hidden="true">S/</span><input id="amount" name="amount" type="number" inputmode="decimal" placeholder="200.00" min="0.01" max="999999.99" step="0.01" required></div>
+          <button id="register" class="primary" type="submit" disabled>Registrar pedido <span aria-hidden="true">↗</span></button>
+        </form>
+        <div class="quick-test">
+          <p>Usar un caso de prueba de S/ 200</p>
+          <div class="chips" aria-label="Casos de prueba">
+            <button type="button" data-case="NUEVO" disabled>Nuevo</button>
+            <button type="button" data-case="FRECUENTE" disabled>Frecuente</button>
+            <button type="button" data-case="NO_IDENTIFICADO" disabled>No identificado</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card detail-card" aria-labelledby="detail-title">
+        <div class="card-head">
+          <p class="section-label">OPERACIÓN</p>
+          <h2 id="detail-title">Detalle del pedido</h2>
+          <p>Revisa el cálculo y las reacciones a la confirmación.</p>
+        </div>
+        <div id="detail">
+          <div class="empty">
+            <span class="empty-icon" aria-hidden="true">≡</span>
+            <strong>Aún no hay un pedido seleccionado</strong>
+            <p>Registra un pedido o elige uno del historial.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="card history" aria-labelledby="history-title">
+      <div class="card-head">
+        <p class="section-label">SEGUIMIENTO</p>
+        <h2 id="history-title">Historial de pedidos</h2>
+        <p>Consulta el importe, el estado y el detalle de cada registro.</p>
+      </div>
+      <p id="empty-history" class="empty-history">Cargando pedidos…</p>
+      <div id="history-table" class="table-scroll" hidden>
+        <table aria-label="Historial de pedidos">
+          <thead><tr><th scope="col">Pedido</th><th scope="col">Cliente</th><th scope="col">Categoría</th><th scope="col">Descuento</th><th scope="col">Total</th><th scope="col">Estado</th><th scope="col">Detalle</th></tr></thead>
+          <tbody id="history-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <footer class="shell footer"><span>NOVA Market · Arquitectura de Software</span><span>Strategy / Observer</span></footer>
+</body>
+</html>
